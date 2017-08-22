@@ -1,10 +1,12 @@
 require "rulers/version"
 require "rulers/routing"
+require "rulers/util"
+require "rulers/dependencies"
 
 module Rulers
   class Application
     def call(env)
-      `echo debug > debut.txt`;
+      `echo debug > debug.txt`;
 
       if env["PATH_INFO"] == '/favicon.ico'
         return [404, {'Content-Type' => 'text/html'}, []]
