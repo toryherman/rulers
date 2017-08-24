@@ -19,15 +19,14 @@ module Rulers
 
       klass, act = get_controller_and_action(env)
       controller = klass.new(env)
+      text = controller.send(act)
+      r = controller.get_response
 
-      begin
-        text = controller.send(act)
-      rescue
-        # what to do if action doesn't exist
-        text = "ERROR"
+      if r
+        [r.status, r.headers, [r.body].flatten]
+      else
+        [200, {'Content-Type' => 'text/html'}, [text]]
       end
-
-      [200, {'Content-Type' => 'text/html'}, [text]]
     end
   end
 end
